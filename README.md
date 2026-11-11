@@ -1,15 +1,26 @@
+
+<div align="center">
+
 #  SuperGit
 
 **Git. On Steroid.**
 
+```sh
+brew install hayamahamed/tap/supergit
+```
+
+ &nbsp; [Get .rpm](https://github.com/hayamahamed/supergit/releases/download/supergit-latest/supergit.rpm) &nbsp; 
+[Get .deb](https://github.com/hayamahamed/supergit/releases/download/supergit-latest/supergit.deb) &nbsp;
+[Get .pkg.tar.zst](https://github.com/hayamahamed/supergit/releases/download/supergit-latest/supergit.pkg.tar.zst) &nbsp;
+
+  
+</div>
+
 
 
 > [!NOTE]
-> `git` queries its commands in the similar way as `man`'s ( via "git shim") therefore, it is possible to add commands that aren't from git and still get it work using git.
+> _git_ queries its commands in the similar way as _man_'s ( via _git shim_) therefore, it is possible to add commands that aren't from git and still get it work using git (ie. git-multitag can also be accessed via git multitag).
 
-- [Get .rpm](https://github.com/hayamahamed/supergit/releases/download/supergit-latest/supergit.rpm)
-- [Get .deb](https://github.com/hayamahamed/supergit/releases/download/supergit-latest/supergit.deb)
-- [Get .pkg.tar.zst](https://github.com/hayamahamed/supergit/releases/download/supergit-latest/supergit.pkg.tar.zst)
 
 SuperGit is a tool from scratching my own itch. As I am working on a monorepo, I need to checkout to many commands faster to find differences, attach multiple tags to a same commit, push many tags at once, etc.
 
@@ -17,10 +28,10 @@ SuperGit is a tool from scratching my own itch. As I am working on a monorepo, I
 
 | Command | Purpose |
 |---------|---------|
-| `supergit` | Shows meta info about supergit |
-| `git adc` | Add and commit in a single command |
+| `supergit` | Show info about supergit |
+| `git adc` | Stage and commit |
 | `git fastfind` | Interactive, scrollable `git log` with checkout |
-| `git multitag` / `git multitag push` | Create or push multiple tags in one command |
+| `git multitag` / `git multitag push` | Create or push multiple tags |
 | `git nuke` | Generate numerous commits for testing |
 
 ---
@@ -121,3 +132,7 @@ Started 1,2,3...
 Half way done...
 Completed.
 ```
+
+### Contributing
+
+Just open PRs / issues.
