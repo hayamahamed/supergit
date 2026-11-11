@@ -69,7 +69,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           gh release delete "${PKG}-latest" --cleanup-tag --yes || true
-          gh release create "${PKG}-latest" "dist/* \
+          gh release create "${PKG}-latest" "dist/*" \
             --target "$GITHUB_SHA" \
             --title "${PKG} (latest: ${GITHUB_REF_NAME#${PKG}-v})" \
             --latest=false
