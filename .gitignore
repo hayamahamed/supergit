@@ -1,5 +1,3 @@
-!src/lib/
-
 *.asc*
 *.key*
 
@@ -221,3 +219,5 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+!src/lib/
