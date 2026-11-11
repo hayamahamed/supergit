@@ -144,7 +144,7 @@ def render(commits, selected, head_hash, status=""):
     end = min(n, start + MAX_ROWS)
 
     lines = [CLEAR]
-    lines.append("gitout from gitera: Up/Down move, Enter checkout, q quit")
+    lines.append("Up/Down move, Enter checkout, q quit")
     lines.append(f"({selected + 1}/{n})")
     lines.append("")
 
