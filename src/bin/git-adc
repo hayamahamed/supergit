@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+# git adc .gitignore abc xyc -m "short" "long"
+# NOTE: It does not untrack files you already added using git add and therefore, it will also be committed.
+
+if [[ $# == 0 ]]; then
+	echo "Bye. Nothing to do"
+	exit 0
+fi
+while [[ $# -gt 0 ]]; do
+	if [[ $1 == '-m' ]]; then
+		M1="${2}" 
+		M2="${3}"	
+		break
+	else
+		git add "{$1}"
+		shift
+	fi
+done
+
+git commit -m "${M1}" -m "${M2}"
