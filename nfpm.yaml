@@ -1,0 +1,25 @@
+# yaml-language-server: $schema=https://nfpm.goreleaser.com/schema.json
+
+name: supergit
+arch: all
+platform: linux
+version: 1.0.0
+release: 1
+
+maintainer: Hayam A. <hayam@carbonwarp.com>
+vendor: Hayam A.
+homepage: https://github.com/hayamahamed/supergit
+license: MIT
+description: SuperGit - Git. On Steroid.
+
+contents:
+  - src: src/
+    dst: /usr
+    type: tree
+
+rpm:
+  buildhost: milkyway
+  signature:
+    key_file: private.asc
+
+
