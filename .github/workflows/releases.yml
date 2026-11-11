@@ -1,0 +1,75 @@
+name: Package the packages. 
+
+on:
+  push:
+    tags:
+      - "*-v*"
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  NFPM_VERSION: "2.47.0"
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Derive package from tag
+        run: echo "PKG=${GITHUB_REF_NAME%-v*}" >> "$GITHUB_ENV"
+
+      - uses: extractions/setup-just@v3
+
+      - name: Install nfpm
+        run: |
+          curl -fsSL -o /tmp/nfpm.deb \
+            "https://github.com/goreleaser/nfpm/releases/download/v${NFPM_VERSION}/nfpm_${NFPM_VERSION}_amd64.deb"
+          sudo dpkg -i /tmp/nfpm.deb
+
+      - name: Write signing key
+        env:
+          PRIVATE_ASC: ${{ secrets.PRIVATE_ASC }}
+        run: |
+          test -n "$PRIVATE_ASC" || { echo "secret PRIVATE_ASC is not set"; exit 1; }
+          umask 077
+          printf '%s\n' "$PRIVATE_ASC" > private.asc
+
+      - name: Build
+        env:
+          NFPM_PASSPHRASE: ${{ secrets.NFPM_PASSPHRASE }}
+        run: just -f "${PKG}.just"
+
+      - name: Remove signing key
+        if: always()
+        run: rm -f private.asc
+
+      - name: Check output
+        run: ls -l "${PKG}/dist/"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.PKG }}-dist
+          path: ${{ env.PKG }}/dist/*
+
+      - name: Versioned release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" "${PKG}"/dist/* \
+            --title "${PKG} ${GITHUB_REF_NAME#${PKG}-v}" \
+            --latest=false
+
+      - name: Rolling release (latest)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release delete "${PKG}-latest" --cleanup-tag --yes || true
+          gh release create "${PKG}-latest" "${PKG}"/dist/* \
+            --target "$GITHUB_SHA" \
+            --title "${PKG} (latest: ${GITHUB_REF_NAME#${PKG}-v})" \
+            --latest=false
