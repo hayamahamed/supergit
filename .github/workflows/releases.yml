@@ -42,7 +42,7 @@ jobs:
       - name: Build
         env:
           NFPM_PASSPHRASE: ${{ secrets.NFPM_PASSPHRASE }}
-        run: just -f "${PKG}.just"
+        run: just
 
       - name: Remove signing key
         if: always()
