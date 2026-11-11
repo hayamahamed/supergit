@@ -49,18 +49,18 @@ jobs:
         run: rm -f private.asc
 
       - name: Check output
-        run: ls -l "${PKG}/dist/"
+        run: ls -l "dist/"
 
       - uses: actions/upload-artifact@v4
         with:
           name: ${{ env.PKG }}-dist
-          path: ${{ env.PKG }}/dist/*
+          path: dist/*
 
       - name: Versioned release
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release create "$GITHUB_REF_NAME" "${PKG}"/dist/* \
+          gh release create "$GITHUB_REF_NAME" "dist/* \
             --title "${PKG} ${GITHUB_REF_NAME#${PKG}-v}" \
             --latest=false
 
@@ -69,7 +69,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           gh release delete "${PKG}-latest" --cleanup-tag --yes || true
-          gh release create "${PKG}-latest" "${PKG}"/dist/* \
+          gh release create "${PKG}-latest" "dist/* \
             --target "$GITHUB_SHA" \
             --title "${PKG} (latest: ${GITHUB_REF_NAME#${PKG}-v})" \
             --latest=false
