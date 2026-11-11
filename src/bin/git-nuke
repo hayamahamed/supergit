@@ -1,0 +1,11 @@
+#!/usr/bin/env sh
+
+
+SCRIPT="$(readlink -f "${BASH_SOURCE[0]}")" # to go through symlinks
+SCRIPT_PATH="$(dirname "$BASH_SOURCE")"
+LIBDIR="$SCRIPT_PATH/../lib/supergit/nuke.py"
+
+python "${LIBDIR}"
+
+
+

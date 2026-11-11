@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+printf "SuperGit - v.1.1.1
+ Available Commands:
+   git fastfind
+   git multitag
+   git multitag push
+"
