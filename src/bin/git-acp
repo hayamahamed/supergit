@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+REMOTE=$1
+shift
+
+git adc "$@"
+git push $REMOTE
