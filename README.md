@@ -113,12 +113,12 @@ index f1d5ffa..0000000
 **4. git multitag & git multitag push**
 
 - git multitag      : lets you add multiple tags in a single command (ie. specifically for monorepos)
-- git multitag push : lets you push multiple tags at once
+- git multitag push remotename: lets you push multiple tags at once
 ```bash
 git multitag tag1 tag2 abc xyz
 ```
 ```bash
-git multitag push tag1 tag4 xyz
+git multitag push origin tag1 tag4 xyz
 ```
   
 **5. git nuke**
