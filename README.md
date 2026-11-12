@@ -18,39 +18,52 @@ brew install hayamahamed/tap/supergit
 
 
 
-> [!NOTE]
-> _git_ queries its commands in the similar way as _man_'s ( via _git shim_) therefore, it is possible to add commands that aren't from git and still get it work using git (ie. git-multitag can also be accessed via git multitag).
+__git_ queries its commands in the similar way as _man_'s ( via _git shim_) therefore, it is possible to add commands that aren't from git and still get it work using git (ie. git-multitag can also be accessed via git multitag)._
 
 
-SuperGit is a tool from scratching my own itch. As I am working on a monorepo, I need to checkout to many commands faster to find differences, attach multiple tags to a same commit, push many tags at once, etc.
-
+SuperGit is created so, everyone can reduce the time spent with git (specifically on monorepo's)
 ## Available Commands
 
 | Command | Purpose |
 |---------|---------|
-| `supergit` | Show info about supergit |
-| `git adc` | Stage and commit |
-| `git fastfind` | Interactive, scrollable `git log` with checkout |
+| `supergit`        | Show info about supergit |
+| `git acp`         | Stage, commit, and push |
+| `git adc`         | Stage and commit |
+| `git fastfind`     | Interactive, scrollable `git log` with checkout |
 | `git multitag` / `git multitag push` | Create or push multiple tags |
-| `git nuke` | Generate numerous commits for testing |
+| `git nuke`        | Generate numerous commits for testing |
 
 ---
 
-**1. supergit**
+**supergit**
 
 - Shows meta info about supergit.
 
-**2. git adc**
-- Stages and commits in one step. The single `-m` flag takes **two** quoted strings: the first is the short commit message, the second (optional) is the long description.
+---
 
+**git acp** 
+
+```bash
+git acp remote abc src abc xyz -m "short commit" "long commit"
+```
+Stages, commits. push to the specified remote (or default if not mentioned). The single `-m` flag takes **two** quoted strings, the first is the short commit message and the second (optional) is the long description. 
+
+---
+
+**git adc**
 ```bash
 git adc abc src abc xyz -m "short commit" "long commit"
 ```
-**3. git fastfind** (Largely LLM generated)
-  - Opens a scrollable, interactive view of git log. Press Enter to check out the highlighted commit; quit to return to the commit you were on before launching the tool.
+Same as acp, but does not take remote / push.
+
+---
+
+**git fastfind** (Largely LLM generated)
 ```bash
 git fastfind
 ```
+Opens a scrollable, interactive view of git log. Press Enter to check out the highlighted commit; quit to return to the commit you were on before launching the tool.
+
 <details>
   <summary>fastfind stdout</summary>
   <pre><code>
@@ -110,28 +123,34 @@ index f1d5ffa..0000000
   </code></pre>
 </details>   
 
-**4. git multitag & git multitag push**
+---
 
-- git multitag      : lets you add multiple tags in a single command (ie. specifically for monorepos)
-- git multitag push remotename: lets you push multiple tags at once
+**git multitag & git multitag push**
 ```bash
 git multitag tag1 tag2 abc xyz
 ```
 ```bash
-git multitag push origin tag1 tag4 xyz
+git multitag push tag1 tag4 xyz
 ```
+git multitag      : lets you add multiple tags to a single commit.<br/>
+git multitag push : lets you push multiple tags at once.
+
+
+---
   
-**5. git nuke**
-- Create numerous commits for testing purposes (dont think of painting your graph green).
+**git nuke**
 ```bash
 git nuke
 ```
 ```text
-How many commits you want? 1000 # any positive integer's accepted
+How many commits you want? 1000
 Started 1,2,3...
 Half way done...
 Completed.
 ```
+Create numerous commits for testing purposes (dont think of painting your graph green). Any postivie integer as a value's accepted.
+
+---
 
 ### Contributing
 
