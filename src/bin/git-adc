@@ -13,7 +13,7 @@ while [[ $# -gt 0 ]]; do
 		M2="${3}"	
 		break
 	else
-		git add "{$1}"
+		git add "$1"
 		shift
 	fi
 done
