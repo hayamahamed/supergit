@@ -6,10 +6,9 @@
 **Git. On Steroid.**
 
 ```sh
-brew update
 brew install hayamahamed/tap/supergit
-brew upgrade supergit
 ```
+` brew update && brew upgrade supergit`
 
  &nbsp; [Get .rpm](https://github.com/hayamahamed/supergit/releases/download/supergit-latest/supergit.rpm) &nbsp; 
 [Get .deb](https://github.com/hayamahamed/supergit/releases/download/supergit-latest/supergit.deb) &nbsp;
