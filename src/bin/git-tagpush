@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+if [[ "$#" -lt 2 ]]; then
+	echo "Error: Atleast two args required, remote and tag"
+	echo "multiple tag can be defined too after the remote"
+	
+	exit 1
+fi
+
+REMOTE=$1
+shift
+
+for i in "$@"; do
+	git tag "$i"
+	git push "$REMOTE" "$i"
+done
+
+
