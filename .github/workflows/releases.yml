@@ -73,3 +73,46 @@ jobs:
             --target "$GITHUB_SHA" \
             --title "${PKG} (latest: ${GITHUB_REF_NAME#${PKG}-v})" \
             --latest=false
+            
+      - name: Update Homebrew tap
+        env:
+          TAP_DEPLOY_KEY: ${{ secrets.TAP_DEPLOY_KEY }}
+        run: |
+          set -euo pipefail
+          VERSION="${GITHUB_REF_NAME#${PKG}-v}"
+          URL="https://github.com/${GITHUB_REPOSITORY}/archive/refs/tags/${GITHUB_REF_NAME}.tar.gz"
+          SHA="$(curl -fsSL "$URL" | sha256sum | cut -d' ' -f1)"
+          echo "version=$VERSION sha=$SHA"
+
+          umask 077
+          printf '%s\n' "$TAP_DEPLOY_KEY" > /tmp/tap_key
+          export GIT_SSH_COMMAND="ssh -i /tmp/tap_key -o StrictHostKeyChecking=accept-new"
+
+          git clone git@github.com:hayamahamed/homebrew-tap.git /tmp/tap
+          cd /tmp/tap
+
+          FORMULA="Formula/${PKG}.rb"
+          test -f "$FORMULA" || { echo "no formula for $PKG, skipping"; exit 0; }
+
+          sed -i -E \
+            -e "s|^(\s*url \").*(\")|\1${URL}\2|" \
+            -e "s|^(\s*sha256 \").*(\")|\1${SHA}\2|" \
+            "$FORMULA"
+
+          if git diff --quiet; then
+            echo "formula already up to date"
+            exit 0
+          fi
+
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -am "${PKG} ${VERSION}"
+
+          for i in 1 2 3; do
+            git push && break
+            git pull --rebase
+          done
+
+      - name: Remove tap key
+        if: always()
+        run: rm -f /tmp/tap_key
