@@ -6,7 +6,9 @@
 **Git. On Steroid.**
 
 ```sh
+brew update
 brew install hayamahamed/tap/supergit
+brew upgrade supergit
 ```
 
  &nbsp; [Get .rpm](https://github.com/hayamahamed/supergit/releases/download/supergit-latest/supergit.rpm) &nbsp; 
@@ -29,7 +31,9 @@ SuperGit is created so, everyone can reduce the time spent with git (specificall
 | `supergit`        | Show info about supergit |
 | `git acp`         | Stage, commit, and push |
 | `git adc`         | Stage and commit |
-| `git fastfind`     | Interactive, scrollable `git log` with checkout |
+| `git fastfind`    | Interactive, scrollable `git log` with checkout |
+| `git tags`        | List git tags in more readable way |
+| `git tagpush`     | tag and push (multiple tags accepted |
 | `git multitag` / `git multitag push` | Create or push multiple tags |
 | `git nuke`        | Generate numerous commits for testing |
 
